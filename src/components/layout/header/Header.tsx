@@ -8,6 +8,7 @@ import { localStorageService } from "../../../core/services/localStorage";
 import { USER_IS_AUTHORIZED } from "../../../constants/localStorageConstants";
 import { authApi } from "../../../api/auth/authApi";
 import { useUser } from "../../../hooks/useUser";
+import { RegistrationModal } from "./registrationModal/RegistrationModal";
 
 const UserLoginBox: FunctionComponent<{user: PublicUser}> = ({ user }) => {
   const [ shouldLogOut, setsHouldLogOut] = useState(false)
@@ -29,24 +30,33 @@ const UserLoginBox: FunctionComponent<{user: PublicUser}> = ({ user }) => {
   </>)
 }
 
-const UnAuthorizedLoginBox: FunctionComponent<{ handleLoginOpen: () => void }> = ({ handleLoginOpen }) => {
+const UnAuthorizedLoginBox: FunctionComponent<{ handleLoginOpen: () => void, handleRegistrationOpen: () => void }> = ({ handleLoginOpen, handleRegistrationOpen }) => {
   return (<>
     <button type="button" className="btn btn-primary" onClick={handleLoginOpen}>Вход</button>
-    <button type="button" className="btn btn-primary ms-3">Регистрация</button>
+    <button type="button" className="btn btn-primary ms-3" onClick={handleRegistrationOpen}>Регистрация</button>
   </>)
 }
 
 export const Header: FunctionComponent = () => {
   const { t } = useTranslation()
   const { user } = useUser()
-  const [ open, setOpen ] = useState(false)
+  const [ openLogin, setOpenLogin ] = useState(false)
+  const [ openRegistration, setRegistration ] = useState(false)
 
   const handleLoginOpen = () => {
-    setOpen(true)
+    setOpenLogin(true)
   }
 
   const handleLoginClose = () => {
-    setOpen(false)
+    setOpenLogin(false)
+  }
+
+  const handleRegistrationOpen = () => {
+    setRegistration(true)
+  }
+
+  const handleRegistrationClose = () => {
+    setRegistration(false)
   }
 
   return (
@@ -61,12 +71,13 @@ export const Header: FunctionComponent = () => {
           {
             user 
               ? <UserLoginBox user={user}/>
-              : <UnAuthorizedLoginBox handleLoginOpen={handleLoginOpen}/>
+              : <UnAuthorizedLoginBox handleLoginOpen={handleLoginOpen} handleRegistrationOpen={handleRegistrationOpen}/>
           }
         </div>
       </div>
     </div>
-    <LoginModal open={open} handleClose={handleLoginClose}/>
+    <LoginModal open={openLogin} handleClose={handleLoginClose}/>
+    <RegistrationModal open={openRegistration} handleClose={handleRegistrationClose}/>
   </header>
   )
 }

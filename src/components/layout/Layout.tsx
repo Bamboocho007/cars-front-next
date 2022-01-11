@@ -8,7 +8,9 @@ export const Layout: FunctionComponent = ({ children }) => {
     <>
       <Header />
       <Main>
-        { children }
+        <div className="container">
+          { children }
+        </div>
       </Main>
       <Footer />
     </>

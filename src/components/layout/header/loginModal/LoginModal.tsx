@@ -1,8 +1,7 @@
 import { Modal, TextField } from '@mui/material'
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import useSWR from 'swr'
-import useSWRImmutable from 'swr/immutable'
 import cn from 'classnames'
 import s from './LoginModal.module.scss'
 import { LoginData } from '../../../../interfaces/loginData'
@@ -10,13 +9,12 @@ import { authApi } from '../../../../api/auth/authApi'
 import { localStorageService } from '../../../../core/services/localStorage'
 import { USER_IS_AUTHORIZED } from '../../../../constants/localStorageConstants'
 import { usersApi } from '../../../../api/users/usersApi'
-import { UserContext } from '../../../../context/userContext'
 import { useUser } from '../../../../hooks/useUser'
 
 export const LoginModal: FunctionComponent<{ open: boolean, handleClose: () => void }> = ({ open, handleClose }) => {
   const { control, handleSubmit, getValues, formState: { errors } } = useForm<LoginData>()
-  const [ shouldLogin, setHouldLogin] = useState(false)
-  const { data: loginResponse } = useSWRImmutable(shouldLogin ? '/auth/login' : null, () => authApi.login(getValues()))
+  const [ shouldLogin, setShouldLogin] = useState(false)
+  const { data: loginResponse } = useSWR(shouldLogin ? '/auth/login'  : null, () => authApi.login(getValues()))
   const [ shouldGetUserInfo, setGetUserInfo] = useState(false)
   const { data: userData } = useSWR(shouldGetUserInfo ? 'users/userInfo' : null, usersApi.userInfo)
   const { setUser } = useUser()
@@ -24,6 +22,7 @@ export const LoginModal: FunctionComponent<{ open: boolean, handleClose: () => v
   useEffect(() => {
     if (loginResponse) {
       localStorageService.setObj(USER_IS_AUTHORIZED, true)
+      setShouldLogin(false)
       setGetUserInfo(true)
     }
   }, [loginResponse])
@@ -41,7 +40,7 @@ export const LoginModal: FunctionComponent<{ open: boolean, handleClose: () => v
   }, [userData, handleClose])
 
   const onSubmit = () => {
-    setHouldLogin(true)
+    setShouldLogin(true)
   }
 
   return (
@@ -78,7 +77,7 @@ export const LoginModal: FunctionComponent<{ open: boolean, handleClose: () => v
         />
         {errors.password && <p className="mt-1">This field is required</p>}
         
-        <input type="submit" className="mt-2"/>
+        <input type="submit" className="mt-5"/>
       </form>
     </Modal>
   )

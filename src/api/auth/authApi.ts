@@ -15,8 +15,8 @@ const logOut = async (): Promise<'OK'> => {
   return res.data;
 }
 
-const registration = async (payload: RegistrationPayloadDto): Promise<void> => {
-  const res = await axios.post<void>(
+const registration = async (payload: RegistrationPayloadDto): Promise<'OK'> => {
+  const res = await axios.post<'OK'>(
     `${environment.backendApi}registration/`,
     payload);
   return res.data;
