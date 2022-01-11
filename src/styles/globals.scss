@@ -1,0 +1,33 @@
+@import './css-reset.scss';
+@import './bootstrap-grid.scss';
+@import './fonts.scss';
+@import './colors.scss';
+@import './buttons.scss';
+
+body {
+  font-family: -apple-system, Roboto, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+#__next {
+  min-height: 100vh;
+  display: grid;
+  grid-template-areas: 
+    "header header header"
+    "content content content"
+    "footer footer footer";
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr;
+} 
+
+header {
+  grid-area: header;
+}
+
+main {
+  grid-area: content;
+}
+
+footer {
+  grid-area: footer;
+}
