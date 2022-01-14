@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, TextField } from '@mui/material'
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import cn from 'classnames'
 import useSWR from 'swr'
@@ -9,32 +9,34 @@ import { authApi } from '../../../../api/auth/authApi'
 import { citiesApi } from '../../../../api/cities/citiesApi'
 
 export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: () => void }> = ({ open, handleClose }) => {
-  const { control, handleSubmit, getValues, formState: { errors } } = useForm<RegistrationPayloadDto>()
-  const [ shouldRegistr, setShouldRegistr ] = useState(false)
-  const [ subdivisionsId, setSubdivisionsId ] = useState('');
-  const { data: RegistrResponse } = useSWR(shouldRegistr ? () => authApi.registration(getValues()) : null)
-  const { data: subdivisionsWithCities } = useSWR('/cities/subdivisionsWithCities', citiesApi.subdivisionsWithCities)
-
-  useEffect(() => {
-    if (RegistrResponse) {
-      setShouldRegistr(false)
-      handleClose()
-    }
-  }, [RegistrResponse, handleClose])
+  const { control, handleSubmit, getValues, formState: { errors }, setValue } = useForm<RegistrationPayloadDto>()
+  const [ isSubmitingForm, setIsSubmitingForm ] = useState(false)
+  const [ subdivisionsId, setSubdivisionsId ] = useState('')
+  const { data: subdivisionsWithCities } = useSWR(citiesApi.SUBDIVISIONS_WITH_CITIES_KEY, citiesApi.subdivisionsWithCities)
   
-  const onSubmit = () => {
-    setShouldRegistr(true)
+  const onSubmit = async() => {
+    setIsSubmitingForm(true)
+
+    try {
+      await authApi.registration(getValues()) 
+    } catch (err) {
+      console.log('registration err', err);
+    }
+
+    setIsSubmitingForm(false)
+    handleClose()
   }
 
   const onBackdropClick = () => {
-    if (shouldRegistr) {
+    if (isSubmitingForm) {
       return
     }
     handleClose()
   }
 
   const handleSubdivisionChange = (event: SelectChangeEvent) => {
-    setSubdivisionsId(event.target.value);
+    setSubdivisionsId(event.target.value)
+    setValue('cityId', '')
   };
   
   return (
@@ -169,8 +171,8 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
               type='password' {...field} />}
         />
         {errors.password && <p className="mt-1">This field is required</p>}
-        
-        <input type="submit" className="mt-5"/>
+
+        <button type='submit' className="btn mt-5">Sign Up!</button>
       </form>
     </Modal>
   )

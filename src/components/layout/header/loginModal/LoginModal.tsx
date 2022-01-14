@@ -13,19 +13,10 @@ import { useUser } from '../../../../hooks/useUser'
 
 export const LoginModal: FunctionComponent<{ open: boolean, handleClose: () => void }> = ({ open, handleClose }) => {
   const { control, handleSubmit, getValues, formState: { errors } } = useForm<LoginData>()
-  const [ shouldLogin, setShouldLogin] = useState(false)
-  const { data: loginResponse } = useSWR(shouldLogin ? '/auth/login'  : null, () => authApi.login(getValues()))
+  const [ isLogining, setIsLogining] = useState(false)
   const [ shouldGetUserInfo, setGetUserInfo] = useState(false)
-  const { data: userData } = useSWR(shouldGetUserInfo ? 'users/userInfo' : null, usersApi.userInfo)
+  const { data: userData } = useSWR(shouldGetUserInfo ? usersApi.USER_INFO_KEY : null, usersApi.userInfo)
   const { setUser } = useUser()
-  
-  useEffect(() => {
-    if (loginResponse) {
-      localStorageService.setObj(USER_IS_AUTHORIZED, true)
-      setShouldLogin(false)
-      setGetUserInfo(true)
-    }
-  }, [loginResponse])
 
   useEffect(() => {
     if (userData) {
@@ -39,8 +30,19 @@ export const LoginModal: FunctionComponent<{ open: boolean, handleClose: () => v
     }
   }, [userData, handleClose])
 
-  const onSubmit = () => {
-    setShouldLogin(true)
+  const onSubmit = async() => {
+    setIsLogining(true)
+
+    try {
+      await authApi.login(getValues())
+    } catch(err) {
+      console.log('login error ', err);
+    }
+
+    setIsLogining(false)
+    localStorageService.setObj(USER_IS_AUTHORIZED, true)
+    setGetUserInfo(true)
+    handleClose()
   }
 
   return (

@@ -9,7 +9,9 @@ const userInfo = async (): Promise<PublicUser> => {
   });
   return res.data;
 }
+const USER_INFO_KEY = 'users/userInfo'
 
 export const usersApi = {
   userInfo,
+  USER_INFO_KEY,
 }

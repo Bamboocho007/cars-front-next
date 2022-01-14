@@ -5,11 +5,7 @@ export default function Home() {
   return (
     <>    
       <div className={'main'}>
-        fwgreg
-
-        <div className="nested">
-          nested obj
-        </div>
+        Index page
       </div>
     </>
   )

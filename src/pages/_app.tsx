@@ -10,7 +10,7 @@ import { USER_IS_AUTHORIZED } from '../constants/localStorageConstants';
 
 const MyApp: FunctionComponent<any> = ({ Component, pageProps: { pageProps, fallback = {} },  }) => {
   const [user, setUser] = useState(null)
-  const { data: userData } = useSWR(localStorageService.getObj<boolean>(USER_IS_AUTHORIZED) ? 'users/userInfo' : null, usersApi.userInfo)
+  const { data: userData } = useSWR(localStorageService.getObj<boolean>(USER_IS_AUTHORIZED) ? usersApi.USER_INFO_KEY : null, usersApi.userInfo)
   
   useEffect(() => {
     setUser(userData)

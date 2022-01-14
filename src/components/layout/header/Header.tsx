@@ -1,18 +1,19 @@
 import { FunctionComponent, useEffect, useState } from "react"
 import { useTranslation } from 'next-i18next'
+import { useRouter } from "next/router"
+import useSWR from "swr"
 import s from './Header.module.scss'
-import { LoginModal } from "./loginModal/LoginModal";
-import { PublicUser } from "../../../api/auth/dtos/publicUser";
-import useSWR from "swr";
-import { localStorageService } from "../../../core/services/localStorage";
-import { USER_IS_AUTHORIZED } from "../../../constants/localStorageConstants";
-import { authApi } from "../../../api/auth/authApi";
-import { useUser } from "../../../hooks/useUser";
-import { RegistrationModal } from "./registrationModal/RegistrationModal";
+import { LoginModal } from "./loginModal/LoginModal"
+import { PublicUser } from "../../../api/auth/dtos/publicUser"
+import { localStorageService } from "../../../core/services/localStorage"
+import { USER_IS_AUTHORIZED } from "../../../constants/localStorageConstants"
+import { authApi } from "../../../api/auth/authApi"
+import { useUser } from "../../../hooks/useUser"
+import { RegistrationModal } from "./registrationModal/RegistrationModal"
 
 const UserLoginBox: FunctionComponent<{user: PublicUser}> = ({ user }) => {
   const [ shouldLogOut, setsHouldLogOut] = useState(false)
-  const { data } = useSWR(shouldLogOut ? '/auth/logOut' : null, authApi.logOut)
+  const { data } = useSWR(shouldLogOut ? authApi.LOG_OUT_KEY : null, authApi.logOut)
   const { setUser } = useUser()
 
   useEffect(() => {
@@ -42,6 +43,7 @@ export const Header: FunctionComponent = () => {
   const { user } = useUser()
   const [ openLogin, setOpenLogin ] = useState(false)
   const [ openRegistration, setRegistration ] = useState(false)
+  const { locales, pathname, asPath, query, push, locale } = useRouter()
 
   const handleLoginOpen = () => {
     setOpenLogin(true)
@@ -67,12 +69,23 @@ export const Header: FunctionComponent = () => {
           Cars project
           { t('home:HomeTest') } 
         </div> 
-        <div className="login-box d-flex align-items-center">
-          {
-            user 
-              ? <UserLoginBox user={user}/>
-              : <UnAuthorizedLoginBox handleLoginOpen={handleLoginOpen} handleRegistrationOpen={handleRegistrationOpen}/>
-          }
+        <div className="right-side d-flex align-items-center">
+          <div className="login-box d-flex align-items-center">
+            {
+              user 
+                ? <UserLoginBox user={user}/>
+                : <UnAuthorizedLoginBox handleLoginOpen={handleLoginOpen} handleRegistrationOpen={handleRegistrationOpen}/>
+            }
+          </div>
+          <div className="locale-box d-flex align-items-center ms-4">
+            { locales.map((l) => {
+              return <button 
+                className="btn" 
+                disabled={locale === l}
+                key={l} 
+                onClick={() => push({ pathname, query }, asPath, { locale: l })}>{l}</button>
+            })}
+          </div>
         </div>
       </div>
     </div>
