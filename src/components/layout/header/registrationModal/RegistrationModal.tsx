@@ -1,9 +1,8 @@
-import { FormControl, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, TextField } from '@mui/material'
+import { InputLabel, MenuItem, Modal, Select, SelectChangeEvent } from '@mui/material'
 import React, { FunctionComponent, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import cn from 'classnames'
 import useSWR from 'swr'
-import s from './RegistrationModal.module.scss'
+import { SFormBox, STextField, SError, SSignUp, SFormControl } from './RegistrationModalStyles'
 import { RegistrationPayloadDto } from '../../../../api/auth/dtos/auth-dtos'
 import { authApi } from '../../../../api/auth/authApi'
 import { citiesApi } from '../../../../api/cities/citiesApi'
@@ -41,7 +40,7 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
   
   return (
     <Modal open={open} onClose={handleClose} BackdropProps={{onClick: onBackdropClick}}>
-      <form className={cn(s['formBox'], 'p-3')} onSubmit={handleSubmit(onSubmit)}>
+      <SFormBox onSubmit={handleSubmit(onSubmit)}>
         <p>Регистрация</p>
 
         <Controller
@@ -50,13 +49,12 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => 
-            <TextField 
-              className="mt-2"
+            <STextField 
               style={{width: '100%'}} 
               label="First name" 
               variant="standard" {...field} />}
         />
-        {errors.firstName && <p className="mt-1">This field is required</p>}
+        {errors.firstName && <SError>This field is required</SError>}
 
         <Controller
           name="lastName"
@@ -64,27 +62,25 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => 
-            <TextField 
-              className="mt-2"
+            <STextField 
               style={{width: '100%'}} 
               label="Last name" 
               variant="standard" {...field} />}
         />
-        {errors.lastName && <p className="mt-1">This field is required</p>}
+        {errors.lastName && <SError>This field is required</SError>}
 
         <Controller
           name="patronymic"
           control={control}
           defaultValue=""
           render={({ field }) => 
-            <TextField 
-              className="mt-2"
+            <STextField 
               style={{width: '100%'}} 
               label="Patronymic" 
               variant="standard" {...field} />}
         />
 
-        <FormControl variant="standard" className="mt-2" style={{width: '100%'}}>
+        <SFormControl variant="standard" style={{width: '100%'}}>
           <InputLabel id="demo-simple-select-standard-label">Subdivisions</InputLabel>
           <Select
             labelId="demo-simple-select-standard-label"
@@ -100,7 +96,7 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
               return <MenuItem key={s.cityId} value={s.cityId}>{s.cityId}</MenuItem>
             })}
           </Select>
-        </FormControl>
+        </SFormControl>
 
         <Controller
           name="cityId"
@@ -108,7 +104,7 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => 
-            <FormControl variant="standard" className="mt-2" style={{width: '100%'}}>
+            <SFormControl variant="standard" style={{width: '100%'}}>
               <InputLabel id="demo-simple-select-standard-label">Cities of subdivision</InputLabel>
               <Select
                 {...field}
@@ -125,9 +121,9 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
                     return <MenuItem key={c.cityId} value={c.cityId}>{c.cityId}</MenuItem>
                 })}
               </Select>
-            </FormControl>}
+            </SFormControl>}
         />
-        {errors.cityId && <p className="mt-1">This field is required</p>}
+        {errors.cityId && <SError>This field is required</SError>}
         
         <Controller
           name="email"
@@ -135,13 +131,12 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => 
-            <TextField 
-              className="mt-2"
+            <STextField 
               style={{width: '100%'}} 
               label="Email" 
               variant="standard" {...field} />}
         />
-        {errors.email && <p className="mt-1">This field is required</p>}
+        {errors.email && <SError>This field is required</SError>}
 
         <Controller
           name="phone"
@@ -149,13 +144,12 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => 
-            <TextField 
-              className="mt-2"
+            <STextField 
               style={{width: '100%'}} 
               label="Phone" 
               variant="standard" {...field} />}
         />
-        {errors.phone && <p className="mt-1">This field is required</p>}
+        {errors.phone && <SError>This field is required</SError>}
         
         <Controller
           name="password"
@@ -163,17 +157,16 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => 
-            <TextField 
-              className="mt-1"
+            <STextField 
               style={{width: '100%'}}
               label="Password" 
               variant="standard" 
               type='password' {...field} />}
         />
-        {errors.password && <p className="mt-1">This field is required</p>}
+        {errors.password && <SError>This field is required</SError>}
 
-        <button type='submit' className="btn mt-5">Sign Up!</button>
-      </form>
+        <SSignUp type='submit' className="btn">Sign Up!</SSignUp>
+      </SFormBox>
     </Modal>
   )
 }

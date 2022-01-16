@@ -1,9 +1,8 @@
-import { Modal, TextField } from '@mui/material'
+import { Modal } from '@mui/material'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import useSWR from 'swr'
-import cn from 'classnames'
-import s from './LoginModal.module.scss'
+import { SFormBox, SError, STextField, SSubmitBtn } from './LoginModalStyles'
 import { LoginData } from '../../../../interfaces/loginData'
 import { authApi } from '../../../../api/auth/authApi'
 import { localStorageService } from '../../../../core/services/localStorage'
@@ -47,7 +46,7 @@ export const LoginModal: FunctionComponent<{ open: boolean, handleClose: () => v
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <form className={cn(s['formBox'], 'p-3')} onSubmit={handleSubmit(onSubmit)}>
+      <SFormBox onSubmit={handleSubmit(onSubmit)}>
         <p>Вход</p>
         
         <Controller
@@ -56,13 +55,12 @@ export const LoginModal: FunctionComponent<{ open: boolean, handleClose: () => v
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => 
-            <TextField 
-              className="mt-2"
+            <STextField 
               style={{width: '100%'}} 
               label="Email" 
               variant="standard" {...field} />}
         />
-        {errors.email && <p className="mt-1">This field is required</p>}
+        {errors.email && <SError>This field is required</SError>}
         
         <Controller
           name="password"
@@ -70,17 +68,16 @@ export const LoginModal: FunctionComponent<{ open: boolean, handleClose: () => v
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => 
-            <TextField 
-              className="mt-1"
+            <STextField 
               style={{width: '100%'}}
               label="Password" 
               variant="standard" 
               type='password' {...field} />}
         />
-        {errors.password && <p className="mt-1">This field is required</p>}
-        
-        <input type="submit" className="mt-5"/>
-      </form>
+        {errors.password && <SError>This field is required</SError>}
+
+        <SSubmitBtn type="submit" className='btn'>Submit</SSubmitBtn>
+      </SFormBox>
     </Modal>
   )
 }

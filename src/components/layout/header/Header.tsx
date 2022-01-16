@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect, useState } from "react"
 import { useTranslation } from 'next-i18next'
 import { useRouter } from "next/router"
 import useSWR from "swr"
-import s from './Header.module.scss'
+import { SContainer, SHeader, SRightSide, SLoginBox, SLocaleBox, SLogOutBtn, SUserName, SGeristrationBtn } from './HeaderStyles'
 import { LoginModal } from "./loginModal/LoginModal"
 import { PublicUser } from "../../../api/auth/dtos/publicUser"
 import { localStorageService } from "../../../core/services/localStorage"
@@ -24,17 +24,17 @@ const UserLoginBox: FunctionComponent<{user: PublicUser}> = ({ user }) => {
   }, [data, setUser])
 
   return (<>
-    <button type="button" className="btn btn-primary ms-3" onClick={() => setsHouldLogOut(true)}>Выход</button>
-    <div className="username ms-3">
+    <SLogOutBtn type="button" className="btn btn-primary" onClick={() => setsHouldLogOut(true)}>Выход</SLogOutBtn>
+    <SUserName>
       { user.firstName }
-    </div>
+    </SUserName>
   </>)
 }
 
 const UnAuthorizedLoginBox: FunctionComponent<{ handleLoginOpen: () => void, handleRegistrationOpen: () => void }> = ({ handleLoginOpen, handleRegistrationOpen }) => {
   return (<>
     <button type="button" className="btn btn-primary" onClick={handleLoginOpen}>Вход</button>
-    <button type="button" className="btn btn-primary ms-3" onClick={handleRegistrationOpen}>Регистрация</button>
+    <SGeristrationBtn type="button" className="btn btn-primary" onClick={handleRegistrationOpen}>Регистрация</SGeristrationBtn>
   </>)
 }
 
@@ -62,35 +62,33 @@ export const Header: FunctionComponent = () => {
   }
 
   return (
-  <header className={s['header']}>
-    <div className="container">
-      <div className="row row-cols-auto justify-content-between align-items-center">        
-        <div className="logo">
-          Cars project
-          { t('home:HomeTest') } 
-        </div> 
-        <div className="right-side d-flex align-items-center">
-          <div className="login-box d-flex align-items-center">
-            {
-              user 
-                ? <UserLoginBox user={user}/>
-                : <UnAuthorizedLoginBox handleLoginOpen={handleLoginOpen} handleRegistrationOpen={handleRegistrationOpen}/>
-            }
-          </div>
-          <div className="locale-box d-flex align-items-center ms-4">
-            { locales.map((l) => {
-              return <button 
-                className="btn" 
-                disabled={locale === l}
-                key={l} 
-                onClick={() => push({ pathname, query }, asPath, { locale: l })}>{l}</button>
-            })}
-          </div>
-        </div>
-      </div>
-    </div>
+  <SHeader>
+    <SContainer className="container">       
+      <div className="logo">
+        Cars project
+        { t('home:HomeTest') } 
+      </div> 
+      <SRightSide>
+        <SLoginBox>
+          {
+            user 
+              ? <UserLoginBox user={user}/>
+              : <UnAuthorizedLoginBox handleLoginOpen={handleLoginOpen} handleRegistrationOpen={handleRegistrationOpen}/>
+          }
+        </SLoginBox>
+        <SLocaleBox>
+          { locales.map((l) => {
+            return <button 
+              className="btn" 
+              disabled={locale === l}
+              key={l} 
+              onClick={() => push({ pathname, query }, asPath, { locale: l })}>{l}</button>
+          })}
+        </SLocaleBox>
+      </SRightSide>
+    </SContainer>
     <LoginModal open={openLogin} handleClose={handleLoginClose}/>
     <RegistrationModal open={openRegistration} handleClose={handleRegistrationClose}/>
-  </header>
+  </SHeader>
   )
 }

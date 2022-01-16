@@ -1,11 +1,12 @@
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { QuickSearchForm } from '../HomeModule/components/QuickSearchForm/QuickSearchForm';
 
 export default function Home() {
   return (
     <>    
       <div className={'main'}>
-        Index page
+        <QuickSearchForm />
       </div>
     </>
   )

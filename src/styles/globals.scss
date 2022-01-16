@@ -1,5 +1,4 @@
 @import './css-reset.scss';
-@import './bootstrap-grid.scss';
 @import './fonts.scss';
 @import './colors.scss';
 @import './buttons.scss';
@@ -30,4 +29,10 @@ main {
 
 footer {
   grid-area: footer;
+}
+
+.container {
+  max-width: 1440px;
+  padding: 0px 20px;
+  margin: 0px auto;
 }
