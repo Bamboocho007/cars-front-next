@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Radio, RadioProps, Select, Checkbox } from '@mui/material'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { QuickSearchFormStyles as S } from './QuickSearchFormStyles'
 
@@ -46,7 +46,7 @@ export const QuickSearchForm: FunctionComponent = () => {
             control={control}
             render={({ field }) =>
             <S.ControlLabel
-              control={<Checkbox  {...field}/>}
+              control={<Checkbox  {...field} disableRipple/>}
               label="Checked vin"
               labelPlacement="start"
               sx={{
@@ -65,12 +65,11 @@ export const QuickSearchForm: FunctionComponent = () => {
             control={control}
             defaultValue=""
             render={({ field }) => 
-              <FormControl variant="standard" className="mt-2" style={{width: '100%'}}>
-                <InputLabel id="demo-simple-select-standard-label">Vehicle type</InputLabel>
+              <FormControl variant="standard" style={{width: '100%'}}>
+                <InputLabel id="vehicleType">Vehicle type</InputLabel>
                 <Select
                   {...field}
-                  labelId="demo-simple-select-standard-label"
-                  id="demo-simple-select-standard"
+                  labelId="vehicleType"
                   label="Cities of subdivision"
                 >
                   <MenuItem value="">
@@ -90,12 +89,12 @@ export const QuickSearchForm: FunctionComponent = () => {
             control={control}
             defaultValue=""
             render={({ field }) => 
-              <FormControl variant="standard" className="mt-2" style={{width: '100%'}}>
-                <InputLabel id="demo-simple-select-standard-label">Brand</InputLabel>
+              <FormControl variant="standard" style={{width: '100%'}}>
+                <InputLabel id="brand">Brand</InputLabel>
                 <Select
                   {...field}
-                  labelId="demo-simple-select-standard-label"
-                  id="demo-simple-select-standard"
+                  labelId="brand"
+                  id="brand"
                   label="Cities of subdivision"
                 >
                   <MenuItem value="">
@@ -115,10 +114,9 @@ export const QuickSearchForm: FunctionComponent = () => {
             control={control}
             defaultValue=""
             render={({ field }) => 
-              <FormControl variant="standard" className="mt-2" style={{width: '100%'}}>
+              <FormControl variant="standard" style={{width: '100%'}}>
                 <InputLabel id="model">Model</InputLabel>
                 <Select
-                  value=''
                   {...field}
                   labelId="model"
                   id="modelId"
@@ -149,8 +147,8 @@ export const QuickSearchForm: FunctionComponent = () => {
               <FormControl variant="standard">
                 <InputLabel id="subdivision">Subdivision</InputLabel>
                 <Select
+                  {...field}
                   labelId="subdivision"
-                  value={''}
                   label="Subdivision"
                 >
                   <MenuItem value="">
@@ -167,11 +165,99 @@ export const QuickSearchForm: FunctionComponent = () => {
             <S.ShortLineLabel>
               Year
             </S.ShortLineLabel>
+            <S.TwoSelectsLine>
+              <Controller 
+                name="yearFrom"
+                control={control}
+                defaultValue=""
+                render={({ field }) =>
+                <FormControl variant="standard">
+                  <InputLabel id="yearFrom">From</InputLabel>
+                  <Select
+                    {...field}
+                    labelId="yearFrom"
+                    label="From"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+                </FormControl>}
+              />
+              <Controller 
+                name="yearTo"
+                control={control}
+                defaultValue=""
+                render={({ field }) =>
+                <FormControl variant="standard">
+                  <InputLabel id="yearTo">To</InputLabel>
+                  <Select
+                    {...field}
+                    labelId="yearTo"
+                    label="To"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+                </FormControl>}
+              />
+            </S.TwoSelectsLine>
           </S.ShortLine>
           <S.ShortLine>
             <S.ShortLineLabel>
               Price
             </S.ShortLineLabel>
+            <S.TwoSelectsLine>
+              <Controller 
+                name="priceFrom"
+                control={control}
+                defaultValue=""
+                render={({ field }) =>
+                <FormControl variant="standard">
+                  <InputLabel id="priceFrom">From</InputLabel>
+                  <Select
+                    {...field}
+                    labelId="priceFrom"
+                    label="From"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+                </FormControl>}
+              />
+              <Controller 
+                name="priceTo"
+                control={control}
+                defaultValue=""
+                render={({ field }) =>
+                <FormControl variant="standard">
+                  <InputLabel id="priceTo">To</InputLabel>
+                  <Select
+                    {...field}
+                    labelId="priceTo"
+                    label="To"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+                </FormControl>}
+              />
+            </S.TwoSelectsLine>
           </S.ShortLine>
         </S.WithGaps>
       </S.QuickSearchLine>

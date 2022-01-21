@@ -62,6 +62,20 @@ const ControlLabel = styled(FormControlLabel)`
   }
 `
 
+const TwoSelectsLine = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  & > * {
+    width: 100%;
+  }
+
+  & > *:first-child {
+    margin-right: 10px;
+  }
+`
+
 const ShortLineLabel = styled.label`
   margin-top: 16px;
 `
@@ -77,6 +91,7 @@ export const QuickSearchFormStyles = {
   RGroup,
   ShortLine,
   ControlLabel,
+  TwoSelectsLine,
   ShortLineLabel,
   SearchButton,
 } 
