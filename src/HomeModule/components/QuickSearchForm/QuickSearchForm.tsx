@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Radio, RadioProps, Select, Checkbox } from '@mui/material'
 import React, { FunctionComponent } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { SQuickSearchBox, SQuickSearchLine, SRadioGroup, SShortLine, SFormControlLabel, SShortLineLabel, SSearchButton, WithGaps } from './QuickSearchFormStyles'
+import { QuickSearchFormStyles as S } from './QuickSearchFormStyles'
 
 const RadioBtnTemplate: FunctionComponent<RadioProps & {checkedLabel: string, label: string}> = ({checkedLabel, label, ...rest}) => {
   return <Radio 
@@ -23,29 +23,29 @@ export const QuickSearchForm: FunctionComponent = () => {
   const { control, handleSubmit, getValues, formState: { errors }, setValue } = useForm()
 
   return (
-    <SQuickSearchBox>
-      <SQuickSearchLine>
+    <S.QuickSearchBox>
+      <S.QuickSearchLine>
         <Controller 
           name="carState"
           defaultValue="0"
           control={control}
           render={({ field }) =>
-            <SRadioGroup
+            <S.RGroup
               {...field}
             >
               <RadioBtnTemplate value="0" checkedLabel={'All c'} label={'All'}/>
               <RadioBtnTemplate value="1" checkedLabel={'Were in use c'} label={'Were in use'}/>
               <RadioBtnTemplate value="2" checkedLabel={'New c'} label={'New'}/>
-            </SRadioGroup>}
+            </S.RGroup>}
         />
 
-        <SShortLine>
+        <S.ShortLine>
           <div></div>
           <Controller 
             name="checkedVin"
             control={control}
             render={({ field }) =>
-            <SFormControlLabel
+            <S.ControlLabel
               control={<Checkbox  {...field}/>}
               label="Checked vin"
               labelPlacement="start"
@@ -54,12 +54,12 @@ export const QuickSearchForm: FunctionComponent = () => {
               }}
             />}
           />
-        </SShortLine>
+        </S.ShortLine>
 
-      </SQuickSearchLine>
+      </S.QuickSearchLine>
 
-      <SQuickSearchLine>
-        <WithGaps>
+      <S.QuickSearchLine>
+        <S.WithGaps>
           <Controller
             name="vehicleType"
             control={control}
@@ -135,12 +135,12 @@ export const QuickSearchForm: FunctionComponent = () => {
                 </Select>
               </FormControl>}
           />
-        </WithGaps>
-        <WithGaps>
-          <SShortLine>
-            <SShortLineLabel>
+        </S.WithGaps>
+        <S.WithGaps>
+          <S.ShortLine>
+            <S.ShortLineLabel>
               Subdivision
-            </SShortLineLabel>
+            </S.ShortLineLabel>
             <Controller 
               name="subdivision"
               control={control}
@@ -162,30 +162,30 @@ export const QuickSearchForm: FunctionComponent = () => {
                 </Select>
               </FormControl>}
             />
-          </SShortLine>
-          <SShortLine>
-            <SShortLineLabel>
+          </S.ShortLine>
+          <S.ShortLine>
+            <S.ShortLineLabel>
               Year
-            </SShortLineLabel>
-          </SShortLine>
-          <SShortLine>
-            <SShortLineLabel>
+            </S.ShortLineLabel>
+          </S.ShortLine>
+          <S.ShortLine>
+            <S.ShortLineLabel>
               Price
-            </SShortLineLabel>
-          </SShortLine>
-        </WithGaps>
-      </SQuickSearchLine>
+            </S.ShortLineLabel>
+          </S.ShortLine>
+        </S.WithGaps>
+      </S.QuickSearchLine>
 
         
-      <SQuickSearchLine>
+      <S.QuickSearchLine>
         <button className='btn' type='button'>Aditional filters</button>
 
-        <SShortLine>
+        <S.ShortLine>
           <div></div>
-          <SSearchButton className='btn' type='button'>Search</SSearchButton>
-        </SShortLine>
-      </SQuickSearchLine>
+          <S.SearchButton className='btn' type='button'>Search</S.SearchButton>
+        </S.ShortLine>
+      </S.QuickSearchLine>
       
-    </SQuickSearchBox>
+    </S.QuickSearchBox>
   )
 }

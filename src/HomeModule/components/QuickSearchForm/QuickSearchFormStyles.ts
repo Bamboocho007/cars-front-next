@@ -1,12 +1,11 @@
 import { FormControlLabel, RadioGroup } from '@mui/material'
-import { style } from '@mui/system'
 import styled from 'styled-components'
 
-export const SQuickSearchBox = styled.div`
+const QuickSearchBox = styled.div`
   padding: 15px;
   background-color: #db5c4c;
 `
-export const SQuickSearchLine = styled.div`
+const QuickSearchLine = styled.div`
   display: flex;
   align-items: center;
   margin-top: 20px;
@@ -22,7 +21,7 @@ export const SQuickSearchLine = styled.div`
   }
 `
 
-export const WithGaps = styled.div`
+const WithGaps = styled.div`
   & > *:first-child {
     margin-top: 0px;
   }
@@ -31,14 +30,14 @@ export const WithGaps = styled.div`
   }
 `
 
-export const SRadioGroup = styled(RadioGroup)`
+const RGroup = styled(RadioGroup)`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-direction: row;
 `
 
-export const SShortLine = styled.div`
+const ShortLine = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -51,7 +50,7 @@ export const SShortLine = styled.div`
   }
 `
 
-export const SFormControlLabel = styled(FormControlLabel)`
+const ControlLabel = styled(FormControlLabel)`
   .MuiFormControlLabel-label {
     flex-grow: 1;
     text-align: center;
@@ -63,10 +62,21 @@ export const SFormControlLabel = styled(FormControlLabel)`
   }
 `
 
-export const SShortLineLabel = styled.label`
+const ShortLineLabel = styled.label`
   margin-top: 16px;
 `
 
-export const SSearchButton = styled.button`
+const SearchButton = styled.button`
   
 `
+
+export const QuickSearchFormStyles = {
+  QuickSearchBox,
+  QuickSearchLine,
+  WithGaps,
+  RGroup,
+  ShortLine,
+  ControlLabel,
+  ShortLineLabel,
+  SearchButton,
+} 

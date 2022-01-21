@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect, useState } from "react"
 import { useTranslation } from 'next-i18next'
 import { useRouter } from "next/router"
 import useSWR from "swr"
-import { SContainer, SHeader, SRightSide, SLoginBox, SLocaleBox, SLogOutBtn, SUserName, SGeristrationBtn } from './HeaderStyles'
+import { HeaderStyles as S } from './HeaderStyles'
 import { LoginModal } from "./loginModal/LoginModal"
 import { PublicUser } from "../../../api/auth/dtos/publicUser"
 import { localStorageService } from "../../../core/services/localStorage"
@@ -24,17 +24,17 @@ const UserLoginBox: FunctionComponent<{user: PublicUser}> = ({ user }) => {
   }, [data, setUser])
 
   return (<>
-    <SLogOutBtn type="button" className="btn btn-primary" onClick={() => setsHouldLogOut(true)}>Выход</SLogOutBtn>
-    <SUserName>
+    <S.LogOutBtn type="button" className="btn btn-primary" onClick={() => setsHouldLogOut(true)}>Выход</S.LogOutBtn>
+    <S.UserName>
       { user.firstName }
-    </SUserName>
+    </S.UserName>
   </>)
 }
 
 const UnAuthorizedLoginBox: FunctionComponent<{ handleLoginOpen: () => void, handleRegistrationOpen: () => void }> = ({ handleLoginOpen, handleRegistrationOpen }) => {
   return (<>
     <button type="button" className="btn btn-primary" onClick={handleLoginOpen}>Вход</button>
-    <SGeristrationBtn type="button" className="btn btn-primary" onClick={handleRegistrationOpen}>Регистрация</SGeristrationBtn>
+    <S.GeristrationBtn type="button" className="btn btn-primary" onClick={handleRegistrationOpen}>Регистрация</S.GeristrationBtn>
   </>)
 }
 
@@ -62,21 +62,21 @@ export const Header: FunctionComponent = () => {
   }
 
   return (
-  <SHeader>
-    <SContainer className="container">       
+  <S.Header>
+    <S.Container className="container">       
       <div className="logo">
         Cars project
         { t('home:HomeTest') } 
       </div> 
-      <SRightSide>
-        <SLoginBox>
+      <S.RightSide>
+        <S.LoginBox>
           {
             user 
               ? <UserLoginBox user={user}/>
               : <UnAuthorizedLoginBox handleLoginOpen={handleLoginOpen} handleRegistrationOpen={handleRegistrationOpen}/>
           }
-        </SLoginBox>
-        <SLocaleBox>
+        </S.LoginBox>
+        <S.LocaleBox>
           { locales.map((l) => {
             return <button 
               className="btn" 
@@ -84,11 +84,11 @@ export const Header: FunctionComponent = () => {
               key={l} 
               onClick={() => push({ pathname, query }, asPath, { locale: l })}>{l}</button>
           })}
-        </SLocaleBox>
-      </SRightSide>
-    </SContainer>
+        </S.LocaleBox>
+      </S.RightSide>
+    </S.Container>
     <LoginModal open={openLogin} handleClose={handleLoginClose}/>
     <RegistrationModal open={openRegistration} handleClose={handleRegistrationClose}/>
-  </SHeader>
+  </S.Header>
   )
 }

@@ -2,7 +2,7 @@ import { InputLabel, MenuItem, Modal, Select, SelectChangeEvent } from '@mui/mat
 import React, { FunctionComponent, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import useSWR from 'swr'
-import { SFormBox, STextField, SError, SSignUp, SFormControl } from './RegistrationModalStyles'
+import { RegistrationModalStyles as S } from './RegistrationModalStyles'
 import { RegistrationPayloadDto } from '../../../../api/auth/dtos/auth-dtos'
 import { authApi } from '../../../../api/auth/authApi'
 import { citiesApi } from '../../../../api/cities/citiesApi'
@@ -40,7 +40,7 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
   
   return (
     <Modal open={open} onClose={handleClose} BackdropProps={{onClick: onBackdropClick}}>
-      <SFormBox onSubmit={handleSubmit(onSubmit)}>
+      <S.FormBox onSubmit={handleSubmit(onSubmit)}>
         <p>Регистрация</p>
 
         <Controller
@@ -49,12 +49,12 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => 
-            <STextField 
+            <S.TField 
               style={{width: '100%'}} 
               label="First name" 
               variant="standard" {...field} />}
         />
-        {errors.firstName && <SError>This field is required</SError>}
+        {errors.firstName && <S.Error>This field is required</S.Error>}
 
         <Controller
           name="lastName"
@@ -62,25 +62,25 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => 
-            <STextField 
+            <S.TField 
               style={{width: '100%'}} 
               label="Last name" 
               variant="standard" {...field} />}
         />
-        {errors.lastName && <SError>This field is required</SError>}
+        {errors.lastName && <S.Error>This field is required</S.Error>}
 
         <Controller
           name="patronymic"
           control={control}
           defaultValue=""
           render={({ field }) => 
-            <STextField 
+            <S.TField 
               style={{width: '100%'}} 
               label="Patronymic" 
               variant="standard" {...field} />}
         />
 
-        <SFormControl variant="standard" style={{width: '100%'}}>
+        <S.FControl variant="standard" style={{width: '100%'}}>
           <InputLabel id="demo-simple-select-standard-label">Subdivisions</InputLabel>
           <Select
             labelId="demo-simple-select-standard-label"
@@ -96,7 +96,7 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
               return <MenuItem key={s.cityId} value={s.cityId}>{s.cityId}</MenuItem>
             })}
           </Select>
-        </SFormControl>
+        </S.FControl>
 
         <Controller
           name="cityId"
@@ -104,7 +104,7 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => 
-            <SFormControl variant="standard" style={{width: '100%'}}>
+            <S.FControl variant="standard" style={{width: '100%'}}>
               <InputLabel id="demo-simple-select-standard-label">Cities of subdivision</InputLabel>
               <Select
                 {...field}
@@ -121,9 +121,9 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
                     return <MenuItem key={c.cityId} value={c.cityId}>{c.cityId}</MenuItem>
                 })}
               </Select>
-            </SFormControl>}
+            </S.FControl>}
         />
-        {errors.cityId && <SError>This field is required</SError>}
+        {errors.cityId && <S.Error>This field is required</S.Error>}
         
         <Controller
           name="email"
@@ -131,12 +131,12 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => 
-            <STextField 
+            <S.TField 
               style={{width: '100%'}} 
               label="Email" 
               variant="standard" {...field} />}
         />
-        {errors.email && <SError>This field is required</SError>}
+        {errors.email && <S.Error>This field is required</S.Error>}
 
         <Controller
           name="phone"
@@ -144,12 +144,12 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => 
-            <STextField 
+            <S.TField 
               style={{width: '100%'}} 
               label="Phone" 
               variant="standard" {...field} />}
         />
-        {errors.phone && <SError>This field is required</SError>}
+        {errors.phone && <S.Error>This field is required</S.Error>}
         
         <Controller
           name="password"
@@ -157,16 +157,16 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
           defaultValue=""
           rules={{ required: true }}
           render={({ field }) => 
-            <STextField 
+            <S.TField 
               style={{width: '100%'}}
               label="Password" 
               variant="standard" 
               type='password' {...field} />}
         />
-        {errors.password && <SError>This field is required</SError>}
+        {errors.password && <S.Error>This field is required</S.Error>}
 
-        <SSignUp type='submit' className="btn">Sign Up!</SSignUp>
-      </SFormBox>
+        <S.SignUp type='submit' className="btn">Sign Up!</S.SignUp>
+      </S.FormBox>
     </Modal>
   )
 }
