@@ -69,7 +69,6 @@ export const QuickSearchForm: FunctionComponent = () => {
                 <InputLabel id="vehicleType">Vehicle type</InputLabel>
                 <Select
                   {...field}
-                  labelId="vehicleType"
                   label="Cities of subdivision"
                 >
                   <MenuItem value="">
@@ -93,7 +92,6 @@ export const QuickSearchForm: FunctionComponent = () => {
                 <InputLabel id="brand">Brand</InputLabel>
                 <Select
                   {...field}
-                  labelId="brand"
                   id="brand"
                   label="Cities of subdivision"
                 >
@@ -118,7 +116,6 @@ export const QuickSearchForm: FunctionComponent = () => {
                 <InputLabel id="model">Model</InputLabel>
                 <Select
                   {...field}
-                  labelId="model"
                   id="modelId"
                   label="Cities of subdivision"
                 >
@@ -148,7 +145,6 @@ export const QuickSearchForm: FunctionComponent = () => {
                 <InputLabel id="subdivision">Subdivision</InputLabel>
                 <Select
                   {...field}
-                  labelId="subdivision"
                   label="Subdivision"
                 >
                   <MenuItem value="">
@@ -175,7 +171,6 @@ export const QuickSearchForm: FunctionComponent = () => {
                   <InputLabel id="yearFrom">From</InputLabel>
                   <Select
                     {...field}
-                    labelId="yearFrom"
                     label="From"
                   >
                     <MenuItem value="">
@@ -196,7 +191,6 @@ export const QuickSearchForm: FunctionComponent = () => {
                   <InputLabel id="yearTo">To</InputLabel>
                   <Select
                     {...field}
-                    labelId="yearTo"
                     label="To"
                   >
                     <MenuItem value="">
@@ -224,7 +218,6 @@ export const QuickSearchForm: FunctionComponent = () => {
                   <InputLabel id="priceFrom">From</InputLabel>
                   <Select
                     {...field}
-                    labelId="priceFrom"
                     label="From"
                   >
                     <MenuItem value="">
@@ -245,7 +238,6 @@ export const QuickSearchForm: FunctionComponent = () => {
                   <InputLabel id="priceTo">To</InputLabel>
                   <Select
                     {...field}
-                    labelId="priceTo"
                     label="To"
                   >
                     <MenuItem value="">

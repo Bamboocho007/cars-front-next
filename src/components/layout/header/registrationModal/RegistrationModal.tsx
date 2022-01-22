@@ -81,10 +81,8 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
         />
 
         <S.FControl variant="standard" style={{width: '100%'}}>
-          <InputLabel id="demo-simple-select-standard-label">Subdivisions</InputLabel>
+          <InputLabel>Subdivisions</InputLabel>
           <Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
             value={subdivisionsId}
             onChange={handleSubdivisionChange}
             label="Subdivisions"
@@ -105,11 +103,9 @@ export const RegistrationModal: FunctionComponent<{ open: boolean, handleClose: 
           rules={{ required: true }}
           render={({ field }) => 
             <S.FControl variant="standard" style={{width: '100%'}}>
-              <InputLabel id="demo-simple-select-standard-label">Cities of subdivision</InputLabel>
+              <InputLabel>Cities of subdivision</InputLabel>
               <Select
                 {...field}
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
                 label="Cities of subdivision"
               >
                 <MenuItem value="">
